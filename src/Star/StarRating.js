@@ -13,7 +13,7 @@ StarRating.propTypes = {
   onsetMovieRating: PropTypes.func,
 };
 
-const StarRating = ({
+export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
   size = "48",
@@ -21,7 +21,7 @@ const StarRating = ({
   message = [],
   defaultRating = 0,
   onsetMovieRating,
-}) => {
+}) {
   const textStyle = {
     margin: "0",
     lineHeight: "1",
@@ -42,30 +42,28 @@ const StarRating = ({
   // }
   console.log(message);
   return (
-    <>
-      <div style={containerStyle} className={className}>
-        <div style={starsContainerStyle}>
-          {Array.from({ length: maxRating }, (_, i) => (
-            <Star
-              key={i + 1}
-              onRate={() => handleRating(i + 1)}
-              full={temprating ? temprating >= i + 1 : rating >= i + 1}
-              onHoverIn={() => setTemprating(i + 1)}
-              onHoverOut={() => setTemprating(0)}
-              color={color}
-              size={size}
-            />
-          ))}
-        </div>
-        <p style={textStyle}>
-          {message.length === maxRating
-            ? message[temprating ? temprating - 1 : rating - 1]
-            : temprating || rating || ""}
-        </p>
+    <div style={containerStyle} className={className}>
+      <div style={starsContainerStyle}>
+        {Array.from({ length: maxRating }, (_, i) => (
+          <Star
+            key={i}
+            onRate={() => handleRating(i + 1)}
+            full={temprating ? temprating >= i + 1 : rating >= i + 1}
+            onHoverIn={() => setTemprating(i + 1)}
+            onHoverOut={() => setTemprating(0)}
+            color={color}
+            size={size}
+          />
+        ))}
       </div>
-    </>
+      <p style={textStyle}>
+        {message.length === maxRating
+          ? message[temprating ? temprating - 1 : rating - 1]
+          : temprating || rating || ""}
+      </p>
+    </div>
   );
-};
+}
 
 function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   const starStyle = {
@@ -112,7 +110,7 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   );
 }
 
-export default StarRating;
+// export default StarRating;
 /*
  {full ? 
       <svg
